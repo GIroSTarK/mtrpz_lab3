@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Калькулятор</title>
+  </head>
+  <body>
+    <h1>Калькулятор</h1>
+    <input id="num1" type="number" placeholder="Перше число" />
+    <select id="operation">
+      <option value="add">Додати</option>
+      <option value="subtract">Відняти</option>
+      <option value="multiply">Помножити</option>
+      <option value="divide">Поділити</option>
+    </select>
+    <input id="num2" type="number" placeholder="Друге число" />
+    <button id="calculate">Обчислити</button>
+    <p id="result"></p>
+
+    <script>
+      document
+        .getElementById('calculate')
+        .addEventListener('click', function () {
+          const num1 = document.getElementById('num1').value;
+          const num2 = document.getElementById('num2').value;
+          const operation = document.getElementById('operation').value;
+
+          fetch('http://localhost:3000', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ num1, num2, operation }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              const result = document.getElementById('result');
+              result.textContent = `Результат: ${data}`;
+            });
+        });
+    </script>
+  </body>
+</html>
